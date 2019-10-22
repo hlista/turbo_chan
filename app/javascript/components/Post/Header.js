@@ -6,7 +6,7 @@ class Header extends Component {
     render(){
         const replies = this.props.replies ? this.props.replies.map( (data, index) => {
             return (
-                <Quotelink key={index} abrv={this.props.abrv} pid={data} />
+                <Quotelink key={index} abrv={this.props.abrv} pid={data} isNested={this.props.isNested}/>
             )
         }) : null
         return (

@@ -9,7 +9,15 @@ class Footer extends Component {
         this.popoverRef=React.createRef();
     }
     componentDidMount() {
-        $(this.popoverRef.current).popover({sanitize: false,});
+        if (!this.props.isNested){
+            $(this.popoverRef.current).popover({content: function() {
+                return $(this).siblings('.my-popover-content').html();
+            },
+            html: true,
+            animation: false,
+            placement: 'right',
+            sanitize: false});
+        }
     }
     render(){
         return (
@@ -18,10 +26,12 @@ class Footer extends Component {
                     <Tags tags={this.props.tagged} pid={this.props.pid}/>
                 </div>
                 <div className="col-md-1">
-                    <a tabIndex="0" ref={this.popoverRef} className="btn tag-btn float-right" role="button"
-                     data-toggle="popover" data-placement="right" data-html="true" data-content={renderToString(<Tagbox pid={this.props.pid} tags={this.props.tags}/>)}> 
+                    <a tabIndex="0" ref={this.popoverRef} className="btn tag-btn float-right" role="button"> 
                         +
                     </a>
+                    {!this.props.isNested ? <div className="my-popover-content">
+                        <Tagbox pid={this.props.pid} tags={this.props.tags}/>
+                    </div> : null}
                 </div>
             </div>
         )

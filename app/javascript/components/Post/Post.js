@@ -34,12 +34,12 @@ class Post extends Component {
             padding: '0.25rem 1.25rem'
         }
         return(
-            <div className="Postcontainer">
+            !this.props.isOp ? <div className="post-container">
                 <div className="row no-gutters">
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header" style={cardPaddingStyle}>
-                                <Header abrv={this.props.abrv} pid={this.props.pid} replies={this.state.replies} />
+                                <Header abrv={this.props.abrv} pid={this.props.pid} replies={this.state.replies} isNested={this.props.isReply}/>
                             </div>
                             <div className="card-body">
                                 {this.state.img_url ? <Image url={this.state.img_url}/> : null}
@@ -53,6 +53,23 @@ class Post extends Component {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div> : <div className="op-container">
+                <div className="row no-gutters">
+                {this.state.img_url ? <Image url={this.state.img_url}/> : null}
+                        <div className="card">
+                            <div className="card-header">
+                                <Header abrv={this.props.abrv} pid={this.props.pid} replies={this.state.replies} isNested={this.props.isReply}/>
+                            </div>
+                            <div className="card-body">
+                                <blockquote className="blockquote mb-0">
+                                    {this.state.content}
+                                </blockquote>
+                            </div>
+                            <div className="card-footer">
+                                <Footer pid={this.props.pid} tags={this.props.tags} tagged={[]} isNested={this.props.isReply}/>
+                            </div>
+                        </div>
                 </div>
             </div>
         )

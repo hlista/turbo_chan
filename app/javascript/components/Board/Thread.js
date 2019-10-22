@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Post from '../Post/Post'
-import OpPost from '../Post/OpPost'
 import axios from 'axios'
 class Thread extends Component {
     constructor(props) {
@@ -21,12 +20,7 @@ class Thread extends Component {
     }
     render() {
         const posts = this.state.posts.map( (data, index) => {
-            if (index == 0) {
-                return (<OpPost key={index} abrv={this.props.abrv} pid={data} tags={this.props.tags}/>)
-            }
-            return (
-                <Post key={index} abrv={this.props.abrv} pid={data} tags={this.props.tags}/>
-            )
+            return (<Post isOp={index==0} isReply={false} key={index} abrv={this.props.abrv} pid={data} tags={this.props.tags}/>)
         })
         return(
             <div className="container pt-3 pb-3">

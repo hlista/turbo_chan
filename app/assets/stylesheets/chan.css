@@ -9,7 +9,9 @@
     background-color: #00000080;
     color: #ffffff80;
 }
-
+.my-popover-content{
+    display:none;
+}
 .tag-post-btn {
     padding: 0rem 0.25rem;
     margin-bottom: 0.25rem;

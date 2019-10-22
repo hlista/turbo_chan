@@ -3,7 +3,6 @@ import 'bootstrap/dist/js/bootstrap.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'popper.js/dist/popper.js'
 import Post from './Post/Post'
-import OpPost from './Post/OpPost'
 import axios from 'axios'
 import PostUpload from './PostUpload'
 import $ from 'jquery'
@@ -42,12 +41,9 @@ class Thread extends Component {
     }
     render() {
         const posts = this.state.posts.map( (data, index) => {
-            if (index == 0) {
-                return (<OpPost abrv={this.props.abrv} key={index} pid={data} tags={this.state.tags}/>)
-            }
-            return (
-                this.state.render_count > index ? <Post key={index} abrv={this.props.abrv} pid={data} tags={this.state.tags}/> : null
-            )
+            return (this.state.render_count > index ? 
+                <Post isOp={index==0} isReply={false} key={index} abrv={this.props.abrv} pid={data} tags={this.state.tags}/> :
+                null)
         })
         return(
             <div className="container pt-3 pb-3">
