@@ -1,0 +1,50 @@
+.tag-btn {
+    width: 30px;
+    height: 30px;
+    padding: 1px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.42857;
+    background-color: #00000080;
+    color: #ffffff80;
+}
+
+.tag-post-btn {
+    padding: 0rem 0.25rem;
+    margin-bottom: 0.25rem;
+    margin-right: 0.25rem;
+}
+.card {
+    max-width: 800px;
+    min-width: 480px;
+    background-color: #0078ff12;
+}
+.card-header {
+    padding: 0.25rem 1.25rem;
+    background-color: #007bff40;
+}
+.card-footer {
+    padding: 0.25rem 1.25rem;
+}
+.container {
+    margin: 0;
+}
+.chan-container {
+    margin-left: 0px;
+    margin-right: 0px;
+    max-width: none;
+}
+
+.nospacing {
+    padding: 0;
+    margin: 0;
+}
+.post-popover{
+    max-width: none;
+    min-width: 500px;
+}
+
+.blockquote{
+    font-size: 1rem;
+}
