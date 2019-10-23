@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom'
 import Home from './Home'
 import Board from './Board'
 import Thread from './Thread'
-import queryString from 'query-string'
 class App extends React.Component {
     render () {
         return (

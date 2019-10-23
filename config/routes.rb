@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   end
   get ':abrv', to: 'pages#index'
   get ':abrv/thread/:id', to: 'pages#index'
+  mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

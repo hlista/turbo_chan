@@ -36,7 +36,6 @@ class PostUpload extends Component {
                 content: "",
                 file: null
             })
-            this.props.uploadSuccessCallback()
         })
         .catch(data => {
         })

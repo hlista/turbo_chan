@@ -7,6 +7,7 @@ import $ from 'jquery'
 import axios from 'axios'
 import PostUpload from './PostUpload'
 import ReactOnRails from "react-on-rails"
+import { ActionCableConsumer } from 'react-actioncable-provider';
 class Board extends React.Component {
     constructor(props) {
         super(props)
@@ -16,18 +17,7 @@ class Board extends React.Component {
             render_count: 10
         }
         this.trackScrolling = this.trackScrolling.bind(this)
-        this.postUploadCallback = this.postUploadCallback.bind(this)
-    }
-    postUploadCallback() {
-        axios.get('/api/boards/'+this.props.abrv+'.json')
-        .then(data => {
-            this.setState({
-                threads: data.data.data.threads,
-                tags: data.data.data.tags
-            })
-        })
-        .catch(data => {
-        })
+        this.handleReceivedThread = this.handleReceivedThread.bind(this)
     }
     componentDidMount(){
         axios.get('/api/boards/'+this.props.abrv+'.json')
@@ -56,7 +46,6 @@ class Board extends React.Component {
             })
         })
         document.addEventListener('scroll', this.trackScrolling);
-        console.log($(document).height() - $(document).scrollTop() - $(window).height())
     }
     trackScrolling() {
         if($(document).height() - $(document).scrollTop() - $(window).height() < 100) {
@@ -66,6 +55,11 @@ class Board extends React.Component {
                 })
             }
         }
+    }
+    handleReceivedThread(response) {
+        this.setState({
+            threads: [response.post_num, ...this.state.threads]
+        })
     }
     render() {
         const threads = this.state.threads.map( (data, index) => {
@@ -77,7 +71,8 @@ class Board extends React.Component {
         })
         return (
             <div className="container chan-container">
-                <PostUpload uploadSuccessCallback={this.postUploadCallback} board={this.props.abrv} />
+                <ActionCableConsumer channel={{channel: 'BoardChannel', abrv: this.props.abrv}} onReceived={this.handleReceivedThread}/>
+                <PostUpload board={this.props.abrv} />
                 {threads}
             </div>
         )

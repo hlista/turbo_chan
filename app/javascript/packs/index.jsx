@@ -6,12 +6,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import App from '../components/App'
+import { ActionCableProvider } from 'react-actioncable-provider'
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Router>
-        <Route path="/" component={App} />
-    </Router>,
+    <ActionCableProvider url="ws://localhost:3000/cable">
+        <Router>
+            <Route path="/" component={App} />
+        </Router>
+    </ActionCableProvider>,
     document.body.appendChild(document.createElement('div')),
   )
 })

@@ -6,6 +6,7 @@ import Post from './Post/Post'
 import axios from 'axios'
 import PostUpload from './PostUpload'
 import $ from 'jquery'
+import { ActionCableConsumer } from 'react-actioncable-provider';
 class Thread extends Component {
     constructor(props) {
         super(props)
@@ -16,6 +17,7 @@ class Thread extends Component {
             render_count: 10
         }
         this.trackScrolling = this.trackScrolling.bind(this)
+        this.handleReceivedPost = this.handleReceivedPost.bind(this)
     }
     componentDidMount(){
         axios.get('/api/'+this.props.abrv+'/threads/'+this.props.tid+'.json')
@@ -33,7 +35,6 @@ class Thread extends Component {
             const parent = element.parent()
             const formData = new FormData();
             const api_string = '/api/tags'
-            debugger
             formData.append('board', parent.attr("data-board"));
             formData.append('post_num', parent.attr("data-post"));
             formData.append('tag', element.contents()[0].data);
@@ -55,14 +56,21 @@ class Thread extends Component {
             }
         }
     }
+    handleReceivedPost(response) {
+        debugger
+        this.setState({
+            posts: [...this.state.posts, response.post_num]
+        })
+    }
     render() {
         const posts = this.state.posts.map( (data, index) => {
             return (this.state.render_count > index ? 
-                <Post isOp={index==0} isReply={false} key={index} abrv={this.props.abrv} pid={data} tags={this.state.tags}/> :
+                <Post isOp={index==0} isReply={false} key={data} abrv={this.props.abrv} pid={data} tags={this.state.tags}/> :
                 null)
         })
         return(
             <div className="container pt-3 pb-3">
+                <ActionCableConsumer channel={{channel: 'BthreadChannel', abrv: this.props.abrv, post_num: this.props.tid}} onReceived={this.handleReceivedPost}/>
                 {!this.state.op ? <PostUpload board={this.props.abrv} /> : <PostUpload board={this.props.abrv} op={this.state.op} />}
                 {posts}
             </div>

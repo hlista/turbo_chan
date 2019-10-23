@@ -38,6 +38,7 @@ module Api
             end
             if (new_post&.save)
                 Board.increment_counter(:post_count, b.id)
+                BthreadChannel.broadcast_to(thr, {post_num: new_post.post_num})
                 render json: { post: new_post.post_num }, status: :created
             else
                 render json: {error: "Post not created"}, status: :internal_server_error
@@ -83,6 +84,7 @@ module Api
                             Board.increment_counter(:post_count, b.id)
                             payload = { thread: thr.post_num }
                             status = :created
+                            BoardChannel.broadcast_to(b, {post_num: thr.post_num})
                         else
                             new_post.destroy
                             thr.destroy
