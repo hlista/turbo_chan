@@ -10,7 +10,7 @@ class Tagbox extends Component {
         })
         return (
             <div className="container">
-                <div className="row" id={this.props.pid}>
+                <div className="row" data-post={this.props.pid} data-board={this.props.abrv}>
                     {tags}
                 </div>
             </div>

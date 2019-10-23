@@ -1,10 +1,25 @@
 module Api
     class ApiController < ApplicationController
+        def create_tag
+            tag = Tag.where(name: params[:tag]).first()
+            if (tag)
+                b = Board.where(abrv: params[:board]).first()
+                post = b.posts.where({post_num: params[:post_num]}).first()
+                if (post)
+                    post_tag = PostTag.where({tag: tag, post: post}).first()
+                    if (post_tag)
+                        PostTag.increment_counter(:count, post_tag.id)
+                    else
+                        PostTag.create(post: post, tag: tag, count: 1)
+                    end
+                end
+            end
+        end
         def posts
             b = Board.where(abrv: params[:abrv]).first()
-            post = b.posts.where({board: b, post_num: params[:num]}).first()
+            post = b.posts.where({post_num: params[:num]}).first()
             ret = post ? 
-            {content: post.content, img_url: post.img.attached? ? url_for(post.img) : nil, replies: post.parent_replies.map {|reply| Post.find(reply.child_id).post_num}} :
+            {content: post.content, img_url: post.img.attached? ? url_for(post.img) : nil, replies: post.parent_replies.map {|reply| Post.find(reply.child_id).post_num}, tagged: post.post_tags.map {|posttag| t = Tag.find(posttag.tag.id); {name: t.name, count: posttag.count}}} :
             {content: "Post does not exist"}
             render json: { data: ret }
 

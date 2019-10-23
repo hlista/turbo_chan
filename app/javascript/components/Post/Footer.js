@@ -23,14 +23,14 @@ class Footer extends Component {
         return (
             <div className="row no-gutters">
                 <div className="col-md-11">
-                    <Tags tags={this.props.tagged} pid={this.props.pid}/>
+                    <Tags abrv={this.props.abrv} pid={this.props.pid} tags={this.props.tagged}/>
                 </div>
                 <div className="col-md-1">
                     <a tabIndex="0" ref={this.popoverRef} className="btn tag-btn float-right" role="button"> 
                         +
                     </a>
                     {!this.props.isNested ? <div className="my-popover-content">
-                        <Tagbox pid={this.props.pid} tags={this.props.tags}/>
+                        <Tagbox abrv={this.props.abrv} pid={this.props.pid} tags={this.props.tags}/>
                     </div> : null}
                 </div>
             </div>

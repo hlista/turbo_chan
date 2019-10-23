@@ -9,7 +9,7 @@ class Tags extends Component {
             )
         })
         return (
-            <div id={this.props.pid}>
+            <div data-post={this.props.pid} data-board={this.props.abrv}>
                 {tags}
             </div>
         )

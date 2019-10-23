@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get ':abrv/posts/:num', to: 'api#posts'
     post '/posts', to: 'api#create_post'
     post '/threads', to: 'api#create_thread'
+    post '/tags', to: 'api#create_tag'
     get ':abrv/threads/:num', to: 'api#threads'
   end
   get ':abrv', to: 'pages#index'

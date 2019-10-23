@@ -28,7 +28,23 @@ class Thread extends Component {
         })
         .catch(data => {
         })
-            document.addEventListener('scroll', this.trackScrolling);
+        $(document).on('click', '.tag-post-btn', function() {
+            const element = $(this)
+            const parent = element.parent()
+            const formData = new FormData();
+            const api_string = '/api/tags'
+            debugger
+            formData.append('board', parent.attr("data-board"));
+            formData.append('post_num', parent.attr("data-post"));
+            formData.append('tag', element.contents()[0].data);
+            formData.append('authenticity_token', ReactOnRails.authenticityToken())
+            axios.post(api_string, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        })
+        document.addEventListener('scroll', this.trackScrolling);
     }
     trackScrolling() {
         if($(document).height() - $(document).scrollTop() - $(window).height() < 100) {

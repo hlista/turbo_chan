@@ -22,7 +22,7 @@ class Post extends Component {
                 content: data.data.data.content,
                 img_url: data.data.data.img_url,
                 replies: data.data.data.replies,
-                tagged: data.data.data.tags
+                tagged: data.data.data.tagged
             })
         })
         .catch(data => {
@@ -49,7 +49,7 @@ class Post extends Component {
 
                             </div>
                             <div className="card-footer" style={cardPaddingStyle}>
-                                <Footer pid={this.props.pid} tags={this.props.tags} tagged={[]}/>
+                                <Footer abrv={this.props.abrv} pid={this.props.pid} tags={this.props.tags} tagged={this.state.tagged} isNested={this.props.isReply}/>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ class Post extends Component {
                                 </blockquote>
                             </div>
                             <div className="card-footer">
-                                <Footer pid={this.props.pid} tags={this.props.tags} tagged={[]} isNested={this.props.isReply}/>
+                                <Footer abrv={this.props.abrv} pid={this.props.pid} tags={this.props.tags} tagged={this.state.tagged} isNested={this.props.isReply}/>
                             </div>
                         </div>
                 </div>
