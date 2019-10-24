@@ -61,7 +61,8 @@ module Api
         def threads
             b = Board.where(abrv: params[:abrv]).first()
             tags = b&.tags.map {|tag| tag.name}
-            bthread = b.bthreads.where({post_num: params[:num]}).first()
+            post = b.posts.where({post_num: params[:num]}).first()
+            bthread = Bthread.find(post.bthread.id)
             ret = {posts: [], tags: []}
             if (bthread)
                 posts = bthread.posts.order(:created_at)

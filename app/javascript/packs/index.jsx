@@ -4,13 +4,23 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import App from '../components/App'
-
+import Home from '../components/Home'
+import Board from '../components/Board'
+import Thread from '../components/Thread'
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
         <Router>
-            <Route path="/" component={App} />
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/:abrv/thread/:id" render={({match, location, history}) => (
+                    <Thread abrv={match.params.abrv} tid={match.params.id} history={history} match={match}/>
+                )}/>
+                <Route path="/:abrv" render={({match}) => (
+                    <Board abrv={match.params.abrv} page="1" />
+                )} />
+            </Switch>
         </Router>,
     document.body.appendChild(document.createElement('div')),
   )

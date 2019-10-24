@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server'
 import axios from 'axios'
 import Post from './Post'
 import $ from 'jquery'
-
+import { Link } from 'react-router-dom';
 class Quotelink extends Component {
     constructor(props) {
         super(props)
@@ -42,14 +42,18 @@ class Quotelink extends Component {
             sanitize: false});
 
     }
+    componentWillUnmount(){
+        $(this.popoverRef.current).popover('hide')
+    }
+
 
     render(){
         return (
             !this.props.isNested ? <React.Fragment>
-                <a onMouseEnter={!this.state.isSet ? this.handleMouseEnter : null} ref={this.popoverRef} className="pl-2" href="#"
+                <Link to={"/"+this.props.abrv+"/thread/"+this.props.pid} onMouseEnter={!this.state.isSet ? this.handleMouseEnter : null} ref={this.popoverRef} className="pl-2"
                 data-template='<div class="popover post-popover nospacing" role="tooltip"><div class="popover-body nospacing"></div></div>'>
                     >>{this.props.pid}
-                </a>
+                </Link>
                 <div className="my-popover-content">
                     <Post pid={this.props.pid} abrv="tv" tags={[]} isReply={true} isOp={false} />
                 </div>

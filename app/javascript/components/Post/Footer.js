@@ -19,6 +19,9 @@ class Footer extends Component {
             sanitize: false});
         }
     }
+    componentWillUnmount(){
+        $(this.popoverRef.current).popover('hide')
+    }
     render(){
         return (
             <div className="row no-gutters">

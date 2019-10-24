@@ -1,5 +1,6 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { withRouter } from "react-router";
 import Home from './Home'
 import Board from './Board'
 import Thread from './Thread'
@@ -7,6 +8,7 @@ class App extends React.Component {
     render () {
         return (
             <div>
+            <BrowserRouter>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/:abrv/thread/:id" render={({match, location}) => (
@@ -16,9 +18,9 @@ class App extends React.Component {
                         <Board abrv={match.params.abrv} page="1" />
                     )} />
                 </Switch>
+            </BrowserRouter>
             </div>
         )
     }
 }
-
 export default App
