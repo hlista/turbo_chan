@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#index'
   namespace :api do
+    get 'boards', to: 'api#index'
     get 'boards/:abrv', to: 'api#boards'
     get ':abrv/posts/:num', to: 'api#posts'
     get ':abrv/tags/:num', to: 'api#tags'

@@ -124,5 +124,9 @@ module Api
             end
             render json: { data: ret }
         end
+        def index
+            ret = Board.all.map {|b| {abrv: b.abrv, name: b.name}}
+            render json: { data: {boards: ret} }
+        end
     end
 end

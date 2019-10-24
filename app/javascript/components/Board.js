@@ -21,6 +21,11 @@ class Board extends React.Component {
         this.trackScrolling = this.trackScrolling.bind(this)
         this.handleReceivedThread = this.handleReceivedThread.bind(this)
     }
+    componentWillUnmount() {
+        if (this.cable.subscriptions['subscriptions'].length > 1){ //remove old subscription
+            this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
+        }
+    }
     componentDidMount(){
         axios.get('/api/boards/'+this.props.abrv+'.json')
         .then(data => {

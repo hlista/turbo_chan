@@ -1,21 +1,37 @@
 import React from 'react'
-import ActionCable from 'actioncable'
-
+import { Link } from 'react-router-dom';
+import axios from 'axios'
+import 'bootstrap/dist/js/bootstrap.js'
+import 'bootstrap/dist/css/bootstrap.css'
 class Home extends React.Component {
-
-    cable = ActionCable.createConsumer('/cable');
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            boards: []
+        }
+        this.props.history.push("/")
+    }
     componentDidMount(){
-        this.cable.subscriptions.create({channel: "TagChannel", abrv: "tv", post_num: "40"}, { 
-            received: function(data) {
-                console.log(data)
-            }
+        axios.get('/api/boards.json')
+        .then(data => {
+            this.setState({
+                boards: data.data.data.boards
+            })
+        })
+        .catch(data => {
         })
     }
     render () {
+        const boards = this.state.boards.map( (data, index) => {
+            return (
+                <div className="row" key={index}>
+                    <Link to={"/"+data.abrv}>{data.name}</Link>
+                </div>
+            )
+        })
         return (
-            <div>
-                This is the Home Page
+            <div className="container">
+                {boards}
             </div>
         )
     }
