@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { ActionCableConsumer } from 'react-actioncable-provider';
+import ActionCable from 'actioncable'
 class Tags extends Component {
+    cable = ActionCable.createConsumer('/cable');
+
     constructor(props) {
         super(props)
         this.state = {
@@ -37,6 +39,9 @@ class Tags extends Component {
         })
         .catch(data => {
         })
+        this.cable.subscriptions.create({channel: "TagChannel", abrv: this.props.abrv, post_num: this.props.pid}, { 
+            received: this.handleReceivedTag
+        })
     }
     render(){
         const tags = this.state.tags.map( (data, index) => {
@@ -47,11 +52,9 @@ class Tags extends Component {
             )
         })
         return (
-                <ActionCableConsumer channel={{channel: 'TagChannel', abrv: this.props.abrv, post_num: this.props.pid}} onReceived={this.handleReceivedTag}>
-                    <div data-post={this.props.pid} data-board={this.props.abrv}>
-                        {tags}
-                    </div>
-                </ActionCableConsumer>
+            <div data-post={this.props.pid} data-board={this.props.abrv}>
+                {tags}
+            </div>
         )
     }
 }

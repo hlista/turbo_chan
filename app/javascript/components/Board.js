@@ -7,8 +7,10 @@ import $ from 'jquery'
 import axios from 'axios'
 import PostUpload from './PostUpload'
 import ReactOnRails from "react-on-rails"
-import { ActionCableConsumer } from 'react-actioncable-provider';
+import ActionCable from 'actioncable'
 class Board extends React.Component {
+    cable = ActionCable.createConsumer('/cable');
+
     constructor(props) {
         super(props)
         this.state = {
@@ -45,6 +47,9 @@ class Board extends React.Component {
             })
         })
         document.addEventListener('scroll', this.trackScrolling);
+        this.cable.subscriptions.create({channel: "BoardChannel", abrv: this.props.abrv}, { 
+            received: this.handleReceivedThread
+        })
     }
     trackScrolling() {
         if($(document).height() - $(document).scrollTop() - $(window).height() < 100) {
@@ -70,7 +75,6 @@ class Board extends React.Component {
         })
         return (
             <div className="container chan-container">
-                <ActionCableConsumer channel={{channel: 'BoardChannel', abrv: this.props.abrv}} onReceived={this.handleReceivedThread}/>
                 <PostUpload board={this.props.abrv} />
                 {threads}
             </div>

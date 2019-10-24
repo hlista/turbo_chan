@@ -6,7 +6,9 @@ import Post from './Post/Post'
 import axios from 'axios'
 import PostUpload from './PostUpload'
 import $ from 'jquery'
+import ActionCable from 'actioncable'
 class Thread extends Component {
+    cable = ActionCable.createConsumer('/cable');
     constructor(props) {
         super(props)
         this.state = {
@@ -45,6 +47,9 @@ class Thread extends Component {
             })
         })
         document.addEventListener('scroll', this.trackScrolling);
+        this.cable.subscriptions.create({channel: "BthreadChannel", abrv: this.props.abrv, post_num: this.props.tid}, { 
+            received: this.handleReceivedPost
+        })
     }
     trackScrolling() {
         if($(document).height() - $(document).scrollTop() - $(window).height() < 100) {
@@ -56,7 +61,6 @@ class Thread extends Component {
         }
     }
     handleReceivedPost(response) {
-        debugger
         this.setState({
             posts: [...this.state.posts, response.post_num]
         })
