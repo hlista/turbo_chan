@@ -20,7 +20,9 @@ class Thread extends Component {
     }
     render() {
         const posts = this.state.posts.map( (data, index) => {
-            return (<Post isOp={index==0} isReply={false} key={data} abrv={this.props.abrv} pid={data} tags={this.props.tags}/>)
+            return (
+                <Post isOp={index==0} isReply={false} key={data} abrv={this.props.abrv} pid={data} tags={this.props.tags}/>
+            )
         })
         return(
             <div className="container pt-3 pb-3">

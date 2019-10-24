@@ -1,7 +1,45 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import { ActionCableConsumer } from 'react-actioncable-provider';
 class Tags extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            tags: []
+        }
+        this.handleReceivedTag = this.handleReceivedTag.bind(this)
+    }
+    handleReceivedTag(response) {
+        let already_tagged = false;
+        const new_tags = this.state.tags.map( (data) => {
+            if (data.name == response.name) {
+                data.count = response.count;
+                already_tagged = true;
+            }
+            return {name: data.name, count: data.count}
+        })
+        if (already_tagged) {
+            this.setState({
+                tags: new_tags
+            })
+        } else {
+            this.setState({
+                tags: [...this.state.tags, response]
+            })
+        }
+    }
+    componentDidMount(){
+        axios.get('/api/'+this.props.abrv+'/tags/'+this.props.pid+'.json')
+        .then(data => {
+            this.setState({
+                tags: data.data.data.tags
+            })
+        })
+        .catch(data => {
+        })
+    }
     render(){
-        const tags = this.props.tags.map( (data, index) => {
+        const tags = this.state.tags.map( (data, index) => {
             return (
                 <button key={index} type="button" className="btn btn-primary tag-post-btn">
                   {data.name} <span className="badge badge-light">{data.count}</span>
@@ -9,9 +47,11 @@ class Tags extends Component {
             )
         })
         return (
-            <div data-post={this.props.pid} data-board={this.props.abrv}>
-                {tags}
-            </div>
+                <ActionCableConsumer channel={{channel: 'TagChannel', abrv: this.props.abrv, post_num: this.props.pid}} onReceived={this.handleReceivedTag}>
+                    <div data-post={this.props.pid} data-board={this.props.abrv}>
+                        {tags}
+                    </div>
+                </ActionCableConsumer>
         )
     }
 }

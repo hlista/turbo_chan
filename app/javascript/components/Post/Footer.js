@@ -23,7 +23,7 @@ class Footer extends Component {
         return (
             <div className="row no-gutters">
                 <div className="col-md-11">
-                    <Tags abrv={this.props.abrv} pid={this.props.pid} tags={this.props.tagged}/>
+                    <Tags abrv={this.props.abrv} pid={this.props.pid} />
                 </div>
                 <div className="col-md-1">
                     <a tabIndex="0" ref={this.popoverRef} className="btn tag-btn float-right" role="button"> 

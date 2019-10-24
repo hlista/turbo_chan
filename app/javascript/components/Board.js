@@ -34,7 +34,6 @@ class Board extends React.Component {
             const parent = element.parent()
             const formData = new FormData();
             const api_string = '/api/tags'
-            debugger
             formData.append('board', parent.attr("data-board"));
             formData.append('post_num', parent.attr("data-post"));
             formData.append('tag', element.contents()[0].data);

@@ -1,25 +1,39 @@
 module Api
     class ApiController < ApplicationController
+        def tags
+            b = Board.where(abrv: params[:abrv]).first
+            post = b.posts.where({post_num: params[:num]}).first()
+            ret = {tags: post.post_tags.map {|posttag| t = Tag.find(posttag.tag.id); {name: t.name, count: posttag.count}}}
+            render json: {data: ret}
+        end
         def create_tag
+            response = "error"
+            status = :internal_server_error
             tag = Tag.where(name: params[:tag]).first()
             if (tag)
                 b = Board.where(abrv: params[:board]).first()
                 post = b.posts.where({post_num: params[:post_num]}).first()
                 if (post)
                     post_tag = PostTag.where({tag: tag, post: post}).first()
+                    response = "created"
+                    status = :created
                     if (post_tag)
                         PostTag.increment_counter(:count, post_tag.id)
+                        post_tag.reload
+                        ActionCable.server.broadcast("tags_#{params[:board]}_#{params[:post_num]}", {name: tag.name, count: post_tag.count})
                     else
                         PostTag.create(post: post, tag: tag, count: 1)
+                        ActionCable.server.broadcast("tags_#{params[:board]}_#{params[:post_num]}", {name: tag.name, count: 1})
                     end
                 end
             end
+            render json: {response: response}, status: status
         end
         def posts
             b = Board.where(abrv: params[:abrv]).first()
             post = b.posts.where({post_num: params[:num]}).first()
             ret = post ? 
-            {content: post.content, img_url: post.img.attached? ? url_for(post.img) : nil, replies: post.parent_replies.map {|reply| Post.find(reply.child_id).post_num}, tagged: post.post_tags.map {|posttag| t = Tag.find(posttag.tag.id); {name: t.name, count: posttag.count}}} :
+            {content: post.content, img_url: post.img.attached? ? url_for(post.img) : nil, replies: post.parent_replies.map {|reply| Post.find(reply.child_id).post_num}} :
             {content: "Post does not exist"}
             render json: { data: ret }
 

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     get 'boards/:abrv', to: 'api#boards'
     get ':abrv/posts/:num', to: 'api#posts'
+    get ':abrv/tags/:num', to: 'api#tags'
     post '/posts', to: 'api#create_post'
     post '/threads', to: 'api#create_thread'
     post '/tags', to: 'api#create_tag'

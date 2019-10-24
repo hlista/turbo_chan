@@ -6,7 +6,6 @@ import Post from './Post/Post'
 import axios from 'axios'
 import PostUpload from './PostUpload'
 import $ from 'jquery'
-import { ActionCableConsumer } from 'react-actioncable-provider';
 class Thread extends Component {
     constructor(props) {
         super(props)
@@ -70,7 +69,6 @@ class Thread extends Component {
         })
         return(
             <div className="container pt-3 pb-3">
-                <ActionCableConsumer channel={{channel: 'BthreadChannel', abrv: this.props.abrv, post_num: this.props.tid}} onReceived={this.handleReceivedPost}/>
                 {!this.state.op ? <PostUpload board={this.props.abrv} /> : <PostUpload board={this.props.abrv} op={this.state.op} />}
                 {posts}
             </div>
