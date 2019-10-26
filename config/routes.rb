@@ -1,5 +1,8 @@
+require 'resque/server'
 Rails.application.routes.draw do
   root 'pages#index'
+    mount ActionCable.server => '/cable'
+  mount Resque::Server.new, at: "/resque"
   namespace :api do
     get 'boards', to: 'api#index'
     get 'boards/:abrv', to: 'api#boards'
@@ -12,6 +15,5 @@ Rails.application.routes.draw do
   end
   get ':abrv', to: 'pages#index'
   get ':abrv/thread/:id', to: 'pages#index'
-  mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -23,8 +23,6 @@ class Thread extends Component {
         this.handleReceivedPost = this.handleReceivedPost.bind(this)
         this.scrollToPid = this.scrollToPid.bind(this)
         this.scrollRef = React.createRef()
-        this.props.history.push("/")
-        this.props.history.push(this.props.match.url)
     }
     componentWillUnmount(){
         if (this.cable.subscriptions['subscriptions'].length > 1){ //remove old subscription
@@ -78,14 +76,15 @@ class Thread extends Component {
         }
         if (prevProps.tid != this.props.tid){
             debugger
-            if(this.state.posts.indexOf(parseInt(this.props.tid)) > -1 && this.props.abrv == prevProps.abrv){ //the post is in the current thread
+            const ind = this.state.posts.indexOf(parseInt(this.props.tid))
+            if(ind > -1 && this.props.abrv == prevProps.abrv){ //the post is in the current thread
                 this.setState({
                     pid: parseInt(this.props.tid),
-                    hasScrolledTo: false
+                    hasScrolledTo: false,
+                    render_count: Math.max(this.state.render_count, ind + 3)
                 })
             }
             else {
-                this.props.history.push(this.props.match.url)
                 if (this.cable.subscriptions['subscriptions'].length > 1){ //remove old subscription
                     this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
                 }

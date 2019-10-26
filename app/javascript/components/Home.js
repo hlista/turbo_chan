@@ -9,7 +9,6 @@ class Home extends React.Component {
         this.state = {
             boards: []
         }
-        this.props.history.push("/")
     }
     componentDidMount(){
         axios.get('/api/boards.json')
@@ -20,6 +19,10 @@ class Home extends React.Component {
         })
         .catch(data => {
         })
+        debugger
+    }
+    componentDidUpdate(prevProps, prevState){
+        debugger
     }
     render () {
         const boards = this.state.boards.map( (data, index) => {

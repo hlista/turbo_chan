@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_21_200619) do
+ActiveRecord::Schema.define(version: 2019_10_26_210351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_200619) do
     t.bigint "board_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["board_id", "tag_id"], name: "index_board_tags_on_board_id_and_tag_id", unique: true
     t.index ["board_id"], name: "index_board_tags_on_board_id"
     t.index ["tag_id"], name: "index_board_tags_on_tag_id"
   end
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_200619) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_post_tags_on_post_id"
+    t.index ["tag_id", "post_id"], name: "index_post_tags_on_tag_id_and_post_id", unique: true
     t.index ["tag_id"], name: "index_post_tags_on_tag_id"
   end
 
@@ -92,6 +94,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_200619) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["child_id"], name: "index_replies_on_child_id"
+    t.index ["parent_id", "child_id"], name: "index_replies_on_parent_id_and_child_id", unique: true
     t.index ["parent_id"], name: "index_replies_on_parent_id"
   end
 

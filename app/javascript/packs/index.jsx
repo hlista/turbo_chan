@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <Route path="/:abrv/thread/:id" render={({match, location, history}) => (
                     <Thread abrv={match.params.abrv} tid={match.params.id} history={history} match={match}/>
                 )}/>
-                <Route path="/:abrv" render={({match}) => (
-                    <Board abrv={match.params.abrv} page="1" />
+                <Route path="/:abrv" render={({match, history}) => (
+                    <Board abrv={match.params.abrv} page="1" history={history} match={match} />
                 )} />
             </Switch>
         </Router>,
