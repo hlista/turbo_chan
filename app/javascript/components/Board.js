@@ -10,7 +10,7 @@ import ReactOnRails from "react-on-rails"
 import ActionCable from 'actioncable'
 class Board extends React.Component {
     cable = ActionCable.createConsumer('/cable');
-
+    intervalId = 0;
     constructor(props) {
         super(props)
         this.state = {
@@ -64,6 +64,8 @@ class Board extends React.Component {
         if (this.cable.subscriptions['subscriptions'].length >= 1){ //remove old subscription
             this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
         }
+        clearInterval(this.intervalId)
+        $(document).off('click', '.tag-post-btn')
     }
     componentDidMount(){
         axios.get('/api/boards/'+this.props.abrv+'.json')
@@ -75,7 +77,7 @@ class Board extends React.Component {
         })
         .catch(data => {
         })
-        setInterval(this.postTick, 5000)
+        this.intervalId = setInterval(this.postTick, 5000)
         $(document).on('click', '.tag-post-btn', this.handleTagClick)
         document.addEventListener('scroll', this.trackScrolling);
         this.cable.subscriptions.create({channel: "BoardChannel", abrv: this.props.abrv}, { 

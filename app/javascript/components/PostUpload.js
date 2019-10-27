@@ -6,7 +6,8 @@ class PostUpload extends Component {
     super();
     this.state = {
       file: null,
-      content: ""
+      content: "",
+      subject: ""
     };
 
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -23,6 +24,7 @@ class PostUpload extends Component {
     }
     formData.append('content', this.state.content);
     formData.append('board', this.props.board);
+    formData.append('subject', this.state.subject);
     if (this.props.op) {
         formData.append('op', this.props.op)
     }
@@ -34,7 +36,8 @@ class PostUpload extends Component {
     }).then(data => {
             this.setState({
                 content: "",
-                file: null
+                file: null,
+                subject: ""
             })
         })
         .catch(data => {
@@ -47,12 +50,22 @@ class PostUpload extends Component {
   handleTextChange(event){
     this.setState({content: event.target.value});
   }
-
+  handleSubjectChange(event){
+    this.setState({subject: event.target.value})
+  }
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
         <table>
             <tbody>
+                <tr>
+                    <td>
+                        Subject
+                    </td>
+                    <td>
+                        <input type="text" onChange={this.handleSubjectChange}/>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         Content

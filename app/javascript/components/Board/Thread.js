@@ -21,7 +21,7 @@ class Thread extends Component {
     render() {
         const posts = this.state.posts.map( (data, index) => {
             return (
-                <Post isOp={index==0} isReply={false} key={data} abrv={this.props.abrv} pid={data} tags={this.props.tags}/>
+                <Post isOp={index==0} isBoardView={true} isReply={false} key={data} abrv={this.props.abrv} pid={data} tags={this.props.tags}/>
             )
         })
         return(

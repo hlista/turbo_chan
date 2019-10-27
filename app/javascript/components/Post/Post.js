@@ -34,10 +34,10 @@ class Post extends Component {
             <div className={this.props.isOp ? "op-container" : "post-container"}>
                 <div className="row no-gutters">
                     {this.props.isOp && this.state.img_url ? <Image url={this.state.img_url}/> : null}
-                    <div className={this.props.isOp ? "" : "col-md-12"}>
+                    <div className="col d-flex">
                         <div className="card">
                             <div className="card-header" style={cardPaddingStyle}>
-                                <Header abrv={this.props.abrv} pid={this.props.pid} replies={this.state.replies} isNested={this.props.isReply}/>
+                                <Header isOp={this.props.isOp} isBoardView={this.props.isBoardView} abrv={this.props.abrv} pid={this.props.pid} replies={this.state.replies} isNested={this.props.isReply}/>
                             </div>
                             <div className="card-body">
                                 {!this.props.isOp && this.state.img_url ? <Image url={this.state.img_url}/> : null}

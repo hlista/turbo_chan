@@ -19,9 +19,9 @@ class Header extends Component {
                     <div className="col-md-8">
                         {replies}
                     </div>
-                    <div className="col-md-2">
+                    {this.props.isOp && this.props.isBoardView ? <div className="col-md-2">
                         <Link to={"/"+this.props.abrv+"/thread/"+this.props.pid} className="float-right">Reply</Link>
-                    </div>
+                    </div> : null}
                 </div>
             </div>
         )

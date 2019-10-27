@@ -27,7 +27,8 @@ class Thread extends Component {
     componentWillUnmount(){
         if (this.cable.subscriptions['subscriptions'].length >= 1){ //remove old subscription
             this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
-        }        
+        }
+        $(document).off('click', '.tag-post-btn')
     }
     componentDidMount(){
         this.setState({
@@ -131,7 +132,7 @@ class Thread extends Component {
         const posts = this.state.posts.map( (data, index) => {
             return (this.state.render_count > index ? 
                 <div id={"p" + data} ref={this.state.pid == data ? this.scrollRef : null} key={data}>
-                    <Post isOp={index==0} isReply={false} abrv={this.props.abrv} pid={data} tags={this.state.tags}/>
+                    <Post isOp={index==0} isBoardView={false} isReply={false} abrv={this.props.abrv} pid={data} tags={this.state.tags}/>
                 </div> :
                 null)
         })

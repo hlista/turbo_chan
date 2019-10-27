@@ -19,10 +19,8 @@ class Home extends React.Component {
         })
         .catch(data => {
         })
-        debugger
     }
     componentDidUpdate(prevProps, prevState){
-        debugger
     }
     render () {
         const boards = this.state.boards.map( (data, index) => {
