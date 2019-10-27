@@ -12,7 +12,7 @@ class Tags extends Component {
         this.handleReceivedTag = this.handleReceivedTag.bind(this)
     }
     componentWillUnmount(){
-        if (this.cable.subscriptions['subscriptions'].length > 1){ //remove old subscription
+        if (this.cable.subscriptions['subscriptions'].length >= 1){ //remove old subscription
             this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
         }
     }

@@ -25,7 +25,7 @@ class Thread extends Component {
         this.scrollRef = React.createRef()
     }
     componentWillUnmount(){
-        if (this.cable.subscriptions['subscriptions'].length > 1){ //remove old subscription
+        if (this.cable.subscriptions['subscriptions'].length >= 1){ //remove old subscription
             this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
         }        
     }
@@ -85,7 +85,7 @@ class Thread extends Component {
                 })
             }
             else {
-                if (this.cable.subscriptions['subscriptions'].length > 1){ //remove old subscription
+                if (this.cable.subscriptions['subscriptions'].length >= 1){ //remove old subscription
                     this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
                 }
                 this.setState({
