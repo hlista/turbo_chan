@@ -7,9 +7,11 @@ import 'popper.js/dist/popper.js'
 import $ from 'jquery'
 import axios from 'axios'
 import ReactOnRails from "react-on-rails"
-
-
+import GlobalStore from '../context/GlobalStore'
+import ActionCable from 'actioncable'
 class ParentComponent extends React.Component {
+    static contextType = GlobalStore
+    cable = ActionCable.createConsumer('/cable');
     intervalId = 0;
     constructor(props) {
         super(props)
@@ -18,6 +20,10 @@ class ParentComponent extends React.Component {
         }
         this.handleTagClick = this.handleTagClick.bind(this)
         this.postTick = this.postTick.bind(this)
+        this.handleReceivedTag = this.handleReceivedTag.bind(this)
+    }
+    handleReceivedTag(response) {
+        this.context.updateTag({abrv: this.props.abrv, ...response})
     }
     postTick(){
         this.state.post_array.map((data) => {
@@ -56,14 +62,18 @@ class ParentComponent extends React.Component {
             }
     }
     componentWillUnmount() {
-        debugger
         clearInterval(this.intervalId)
         $(document).off('click', '.tag-post-btn')
+        if (this.cable.subscriptions['subscriptions'].length >= 1){ //remove old subscription
+            this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
+        }
     }
     componentDidMount(){
-        debugger
         this.intervalId = setInterval(this.postTick, 5000)
         $(document).on('click', '.tag-post-btn', this.handleTagClick)
+        this.cable.subscriptions.create({channel: "TagChannel", abrv: this.props.abrv}, { 
+            received: this.handleReceivedTag
+        })
     }
     render() {
         return (

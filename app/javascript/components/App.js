@@ -11,10 +11,25 @@ class App extends React.Component {
         this.setState({posts: [post, ...this.state.posts]})
     };
 
+    updateTag = tag => {
+        const updatedPosts = [...this.state.posts]
+        const index = updatedPosts.findIndex(post => post.abrv === tag.abrv && post.pid === tag.pid)
+        if (index != -1) {
+            const tags = updatedPosts[index].tags;
+            const tindex = tags.findIndex(t => t.name === tag.name)
+            if (tindex != -1){
+                updatedPosts[index].tags[tindex].count = tag.count
+            } else {
+                updatedPosts[index].tags.push({name: tag.name, count: tag.count})
+            }
+        }
+        this.setState({posts: updatedPosts})
+    }
+
     render () {
         return (
             <GlobalStore.Provider value={{ 
-                posts: this.state.posts, addPost: this.addPost
+                posts: this.state.posts, addPost: this.addPost, updateTag: this.updateTag
             }}>
                 <Switch>
                     <Route exact path="/" component={Home} />
