@@ -18,12 +18,9 @@ module Api
                     response = "created"
                     status = :created
                     if (post_tag)
-                        post_tag.increment!(:count, params[:count].to_i)
-                        #post_tag.reload
-                        #ActionCable.server.broadcast("tags_#{params[:board]}_#{params[:post_num]}", {name: tag.name, count: post_tag.count})
+                        PostTag.update_counters post_tag.id, :count => params[:count].to_i
                     else
                         post_tag = PostTag.create(post: post, tag: tag, count: params[:count])
-                        #ActionCable.server.broadcast("tags_#{params[:board]}_#{params[:post_num]}", {name: tag.name, count: 1})
                     end
                     Resque.enqueue(TagBroadcast, params[:board], params[:post_num], params[:tag], post_tag.id)
                 end

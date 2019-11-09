@@ -1,25 +1,22 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { withRouter } from "react-router";
+import { Route, Switch } from 'react-router-dom'
 import Home from './Home'
-import Board from './Board'
-import Thread from './Thread'
+import ParentComponent from './ParentComponent'
+import GlobalStore from '../context/GlobalStore'
 class App extends React.Component {
     render () {
         return (
-            <div>
-            <BrowserRouter>
+            <GlobalStore.Provider>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/:abrv/thread/:id" render={({match, location}) => (
-                        <Thread abrv={match.params.abrv} tid={match.params.id} />
+                        <ParentComponent isBoard={false} abrv={match.params.abrv} tid={match.params.id} />
                     )}/>
                     <Route path="/:abrv" render={({match}) => (
-                        <Board abrv={match.params.abrv} page="1" />
+                        <ParentComponent isBoard={true} abrv={match.params.abrv} />
                     )} />
                 </Switch>
-            </BrowserRouter>
-            </div>
+            </GlobalStore.Provider>
         )
     }
 }

@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import 'bootstrap/dist/js/bootstrap.js'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'popper.js/dist/popper.js'
 import Post from './Post/Post'
 import axios from 'axios'
 import PostUpload from './PostUpload'
@@ -28,7 +25,6 @@ class Thread extends Component {
         if (this.cable.subscriptions['subscriptions'].length >= 1){ //remove old subscription
             this.cable.subscriptions.remove(this.cable.subscriptions['subscriptions'][0])
         }
-        $(document).off('click', '.tag-post-btn')
     }
     componentDidMount(){
         this.setState({
@@ -44,21 +40,6 @@ class Thread extends Component {
             })
         })
         .catch(data => {
-        })
-        $(document).on('click', '.tag-post-btn', function() {
-            const element = $(this)
-            const parent = element.parent()
-            const formData = new FormData();
-            const api_string = '/api/tags'
-            formData.append('board', parent.attr("data-board"));
-            formData.append('post_num', parent.attr("data-post"));
-            formData.append('tag', element.contents()[0].data);
-            formData.append('authenticity_token', ReactOnRails.authenticityToken())
-            axios.post(api_string, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
         })
         document.addEventListener('scroll', this.trackScrolling);
         this.cable.subscriptions.create({channel: "BthreadChannel", abrv: this.props.abrv, post_num: this.props.tid}, { 
@@ -76,7 +57,6 @@ class Thread extends Component {
             setTimeout(this.scrollToPid, 1000)
         }
         if (prevProps.tid != this.props.tid){
-            debugger
             const ind = this.state.posts.indexOf(parseInt(this.props.tid))
             if(ind > -1 && this.props.abrv == prevProps.abrv){ //the post is in the current thread
                 this.setState({
