@@ -24,19 +24,15 @@ class Footer extends Component {
     }
     render(){
         return (
-            <div className="row no-gutters">
-                <div className="col-md-11">
-                    <Tags abrv={this.props.abrv} pid={this.props.pid} />
-                </div>
-                <div className="col-md-1">
-                    <a tabIndex="0" ref={this.popoverRef} className="btn tag-btn float-right" role="button"> 
-                        +
-                    </a>
-                    {!this.props.isNested ? <div className="my-popover-content">
-                        <Tagbox abrv={this.props.abrv} pid={this.props.pid} tags={this.props.tags}/>
-                    </div> : null}
-                </div>
-            </div>
+            <React.Fragment>
+                <a tabIndex="0" ref={this.popoverRef} className="btn tag-btn float-right" role="button"> 
+                    +
+                </a>
+                <Tags tags={this.props.tagged} abrv={this.props.abrv} pid={this.props.pid} />
+                {!this.props.isNested ? <div className="my-popover-content">
+                    <Tagbox abrv={this.props.abrv} pid={this.props.pid} tags={this.props.tags}/>
+                </div> : null}
+            </React.Fragment>
         )
     }
 }

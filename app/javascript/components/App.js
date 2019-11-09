@@ -4,9 +4,18 @@ import Home from './Home'
 import ParentComponent from './ParentComponent'
 import GlobalStore from '../context/GlobalStore'
 class App extends React.Component {
+    state = {
+        posts: []
+    };
+    addPost = post => {
+        this.setState({posts: [post, ...this.state.posts]})
+    };
+
     render () {
         return (
-            <GlobalStore.Provider>
+            <GlobalStore.Provider value={{ 
+                posts: this.state.posts, addPost: this.addPost
+            }}>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/:abrv/thread/:id" render={({match, location}) => (

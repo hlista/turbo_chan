@@ -1,11 +1,5 @@
 module Api
     class ApiController < ApplicationController
-        def tags
-            b = Board.where(abrv: params[:abrv]).first
-            post = b.posts.where({post_num: params[:num]}).first()
-            ret = {tags: post.post_tags.map {|posttag| t = Tag.find(posttag.tag.id); {name: t.name, count: posttag.count}}}
-            render json: {data: ret}
-        end
         def create_tag
             response = "error"
             status = :internal_server_error
@@ -31,7 +25,7 @@ module Api
             b = Board.where(abrv: params[:abrv]).first()
             post = b.posts.where({post_num: params[:num]}).first()
             ret = post ? 
-            {content: post.content, img_url: post.img.attached? ? url_for(post.img) : nil, replies: post.parent_replies.map {|reply| Post.find(reply.child_id).post_num}} :
+            {abrv: params[:abrv], pid: params[:num], content: post.content, img_url: post.img.attached? ? url_for(post.img) : nil, replies: post.parent_replies.map {|reply| Post.find(reply.child_id).post_num}, tags: post.post_tags.map {|posttag| t = Tag.find(posttag.tag.id); {name: t.name, count: posttag.count}}} :
             {content: "Post does not exist"}
             render json: { data: ret }
 
