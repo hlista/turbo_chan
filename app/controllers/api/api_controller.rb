@@ -35,16 +35,19 @@ module Api
             b = Board.where(abrv: params[:board]).first()
             thr = b&.bthreads.where({post_num: params[:op]}).first()
             new_post = thr&.posts.new(content: params[:content], img: img, board: b, post_num: b.post_count)
-            count = 0
-            while (new_post && !new_post.valid? && new_post.errors.messages.has_key?(:post_num) && count < 5) do
-                count += 1
-                sleep 0.2
-                b = Board.find(b.id)
-                new_post.post_num = b.post_count
-            end
+            #count = 0
+            #while (new_post && !new_post.valid? && new_post.errors.messages.has_key?(:post_num) && count < 5) do
+            #    count += 1
+            #    sleep 0.2
+            #    b = Board.find(b.id)
+            #    new_post.post_num = b.post_count
+            #end
             if (new_post&.save)
                 Board.increment_counter(:post_count, b.id)
                 BthreadChannel.broadcast_to(thr, {post_num: new_post.post_num})
+                arr = [thr.post_num] + thr.tail
+                BoardChannel.broadcast_to(b, {posts: arr.uniq})
+                thr.touch
                 render json: { post: new_post.post_num }, status: :created
             else
                 render json: {error: "Post not created"}, status: :internal_server_error
@@ -58,12 +61,7 @@ module Api
             ret = {posts: [], tags: []}
             if (bthread)
                 posts = bthread.posts.order(:created_at)
-                if (params[:last])
-                    po = [posts.first().post_num] + posts.last(3).map {|post| post.post_num}
-                    ret = {posts: po.uniq}
-                else
-                    ret = {posts: posts.map {|post| post.post_num}, tags: tags}
-                end
+                ret = {posts: posts.map {|post| post.post_num}, tags: tags}
             end
             render json: { data: ret }
         end
@@ -76,13 +74,13 @@ module Api
             else
                 b = Board.where(abrv: params[:board]).first()
                 new_post = b&.posts.new(content: params[:content], img: params[:img], post_num: b.post_count)
-                count = 0
-                while (new_post && !new_post.valid? && new_post.errors.messages.has_key?(:post_num) && count < 5) do
-                    count += 1
-                    sleep 0.2
-                    b = Board.find(b.id)
-                    new_post.post_num = b.post_count
-                end
+                #count = 0
+                #while (new_post && !new_post.valid? && new_post.errors.messages.has_key?(:post_num) && count < 5) do
+                #    count += 1
+                #    sleep 0.2
+                #    b = Board.find(b.id)
+                #    new_post.post_num = b.post_count
+                #end
                 if (new_post&.save)
                     thr = b.bthreads.create(post_num: new_post.post_num)
                     if (thr.persisted?)
@@ -91,7 +89,7 @@ module Api
                             Board.increment_counter(:post_count, b.id)
                             payload = { thread: thr.post_num }
                             status = :created
-                            BoardChannel.broadcast_to(b, {post_num: thr.post_num})
+                            BoardChannel.broadcast_to(b, {posts: [thr.post_num]})
                         else
                             new_post.destroy
                             thr.destroy
@@ -111,7 +109,7 @@ module Api
             board = Board.where(abrv: params[:abrv]).first()
             ret = {thread: [], tags: []}
             if (board)
-                ret = {threads: board.bthreads.order('updated_at DESC').map {|thread| thread.op_post.post_num},
+                ret = {threads: board.bthreads.order('updated_at DESC').map {|thread| arr = [thread.post_num] + thread.tail; {posts: arr.uniq}},
                     tags: board.tags.order('updated_at DESC').map {|tag| tag.name}}
             end
             render json: { data: ret }

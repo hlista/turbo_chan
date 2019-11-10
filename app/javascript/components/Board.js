@@ -46,15 +46,23 @@ class Board extends React.Component {
         }
     }
     handleReceivedThread(response) {
-        this.setState({
-            threads: [response.post_num, ...this.state.threads]
-        })
+        debugger
+        const i = this.state.threads.findIndex(thr => thr.posts[0] === response.posts[0])
+        if (i == -1) {
+            this.setState({
+                threads: [response, ...this.state.threads]
+            })
+        } else {
+            this.setState({
+                threads: [...this.state.threads.slice(0, i), response, ...this.state.threads.slice(i+1, this.state.threads.length)]
+            })
+        }
     }
     render() {
         const threads = this.state.threads.map( (data, index) => {
             return (
                 this.state.render_count > index ? 
-                    <Thread key={data} abrv={this.props.abrv} tid={data} tags={this.state.tags}/>
+                    <Thread key={data.posts[0]} abrv={this.props.abrv} posts={data.posts} tags={this.state.tags}/>
                     : null
             )
         })
