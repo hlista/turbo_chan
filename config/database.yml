@@ -85,4 +85,5 @@ production:
   database: postgres
   username: turbochan
   host: <%= ENV['DATABASE_URL'] %>
+  port: 5432
   password: <%= ENV['TURBO_CHAN_DATABASE_PASSWORD'] %>
