@@ -84,5 +84,5 @@ production:
   <<: *default
   database: postgres
   username: turbochan
-  url: <%= ENV['DATABASE_URL'] %>
+  host: <%= ENV['DATABASE_URL'] %>
   password: <%= ENV['TURBO_CHAN_DATABASE_PASSWORD'] %>
