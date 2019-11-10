@@ -82,6 +82,7 @@ test:
 #
 production:
   <<: *default
-  database: turbo_chan_production
-  username: turbo_chan
+  database: postgres
+  username: turbochan
+  url: <%= ENV['DATABASE_URL'] %>
   password: <%= ENV['TURBO_CHAN_DATABASE_PASSWORD'] %>
