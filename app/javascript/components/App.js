@@ -24,12 +24,15 @@ class App extends React.Component {
             }
         }
         this.setState({posts: updatedPosts})
-    }
-
+    };
+    getIndex = (abrv, pid) => {
+        const index = this.state.posts.findIndex(post => post.abrv === abrv && post.pid === pid)
+        return index;
+    };
     render () {
         return (
             <GlobalStore.Provider value={{ 
-                posts: this.state.posts, addPost: this.addPost, updateTag: this.updateTag
+                posts: this.state.posts, addPost: this.addPost, updateTag: this.updateTag, getIndex: this.getIndex
             }}>
                 <Switch>
                     <Route exact path="/" component={Home} />

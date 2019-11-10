@@ -14,7 +14,6 @@ class Post extends Component {
             axios.get('/api/'+this.props.abrv+'/posts/'+this.props.pid+'.json')
             .then(data => {
                 this.context.addPost(data.data.data)
-                console.log(this.context)
             })
             .catch(data => {
             })
@@ -24,7 +23,7 @@ class Post extends Component {
         const cardPaddingStyle = {
             padding: '0.25rem 1.25rem'
         }
-        const index = this.context.posts.findIndex(post => post.abrv === this.props.abrv && post.pid === this.props.pid.toString());
+        const index = this.context.getIndex(this.props.abrv, this.props.pid.toString());
         return(
             index != -1 ? <div className={this.props.isOp ? "op-container" : "post-container"}>
                 <div className="row no-gutters">

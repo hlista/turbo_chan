@@ -11,19 +11,12 @@ class Header extends Component {
             )
         }) : null
         return (
-            <div>
-                <div className="row no-gutters">
-                    <div className="col-md-2">
-                        <a>{'No. '+this.props.pid}</a>
-                    </div>
-                    <div className="col-md-8">
-                        {replies}
-                    </div>
-                    {this.props.isOp && this.props.isBoardView ? <div className="col-md-2">
-                        <Link to={"/"+this.props.abrv+"/thread/"+this.props.pid} className="float-right">Reply</Link>
-                    </div> : null}
-                </div>
-            </div>
+            <React.Fragment>
+                {this.props.isOp && this.props.isBoardView ?
+                    <Link to={"/"+this.props.abrv+"/thread/"+this.props.pid} className="float-right">Reply</Link> : null}
+                <a>{'No. '+this.props.pid}</a>
+                {replies}
+            </React.Fragment>
         )
     }
 }
