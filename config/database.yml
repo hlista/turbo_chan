@@ -82,7 +82,7 @@ test:
 #
 production:
   <<: *default
-  database: postgres
+  database: turbo_chan
   username: turbochan
   host: <%= ENV['DATABASE_URL'] %>
   port: 5432
