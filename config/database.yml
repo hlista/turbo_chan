@@ -82,8 +82,8 @@ test:
 #
 production:
   <<: *default
-  database: turbo_chan
-  username: turbochan
-  host: <%= ENV['DATABASE_URL'] %>
-  port: 5432
-  password: <%= ENV['TURBO_CHAN_DATABASE_PASSWORD'] %>
+  #database: turbo_chan
+  #username: turbochan
+  url: <%= ENV['DATABASE_URL'] %>
+  #port: 5432
+  #password: <%= ENV['TURBO_CHAN_DATABASE_PASSWORD'] %>
