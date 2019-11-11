@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-import 'bootstrap/dist/js/bootstrap.js'
-import 'bootstrap/dist/css/bootstrap.css'
 class Home extends React.Component {
     constructor(props) {
         super(props)
