@@ -14,6 +14,7 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
   config.cache_store = :redis_cache_store, {url: "redis://turbochan.q7e3si.0001.use2.cache.amazonaws.com:6379/1"}
+  Resque.redis = "redis://turbochan.q7e3si.0001.use2.cache.amazonaws.com:6379"
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
