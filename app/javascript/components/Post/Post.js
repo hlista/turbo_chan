@@ -32,7 +32,7 @@ class Post extends Component {
                             <div className="card-header" style={cardPaddingStyle}>
                                 <Header isOp={this.props.isOp} isBoardView={this.props.isBoardView} abrv={this.props.abrv} pid={this.props.pid} replies={this.context.posts[index].replies} isNested={this.props.isReply}/>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body d-flex">
                                 {!this.props.isOp && this.context.posts[index].img_url ? <Image url={this.context.posts[index].img_url}/> : null}
                                 <blockquote className="blockquote mb-0">
                                     {this.context.posts[index].content}
