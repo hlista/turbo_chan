@@ -1,8 +1,6 @@
 import React from "react"
 import Thread from './Thread'
 import Board from './Board'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'popper.js/dist/popper.js'
 import $ from 'jquery'
 import axios from 'axios'
 import ReactOnRails from "react-on-rails"
