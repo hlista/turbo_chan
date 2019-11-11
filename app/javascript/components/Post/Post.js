@@ -26,10 +26,9 @@ class Post extends Component {
         const index = this.context.getIndex(this.props.abrv, this.props.pid.toString());
         return(
             index != -1 ? <div className={this.props.isOp ? "op-container" : "post-container"}>
-                <div className="row no-gutters">
                     {this.props.isOp && this.context.posts[index].img_url ? <Image url={this.context.posts[index].img_url}/> : null}
-                    <div className="col d-flex">
-                        <div className="card">
+                    <div className="d-flex">
+                        <div className="card d-flex">
                             <div className="card-header" style={cardPaddingStyle}>
                                 <Header isOp={this.props.isOp} isBoardView={this.props.isBoardView} abrv={this.props.abrv} pid={this.props.pid} replies={this.context.posts[index].replies} isNested={this.props.isReply}/>
                             </div>
@@ -45,7 +44,6 @@ class Post extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
             </div> : null
         )
     }
