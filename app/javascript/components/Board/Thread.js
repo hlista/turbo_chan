@@ -9,7 +9,7 @@ class Thread extends Component {
             )
         })
         return(
-            <div className="container pt-3 pb-3">
+            <div className="container pt-3 pb-3 clearfix">
                 {posts}
             </div>
         )

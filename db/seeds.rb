@@ -34,5 +34,6 @@ Tag.create(name: "tl;dr")
 Tag.create(name: "Degenerate")
 Tag.create(name: "RRREEEEE")
 Tag.create(name: "cope")
+Tag.create(name: "lewd")
 
 Board.all.map { |b| Tag.all.map {|t| BoardTag.create({board: b, tag: t})}}
