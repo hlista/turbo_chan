@@ -1,7 +1,6 @@
 import React from "react"
 import Thread from './Thread'
 import Board from './Board'
-import 'bootstrap/dist/js/bootstrap.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'popper.js/dist/popper.js'
 import $ from 'jquery'
