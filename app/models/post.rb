@@ -7,6 +7,5 @@ class Post < ApplicationRecord
     has_many :child_replies, :class_name => 'Reply', :foreign_key => 'child_id'
     has_one_attached :img
     validates_uniqueness_of :post_num, scope: :board_id
-    validates_presence_of :content
     validates_length_of :content, :maximum => 2000
 end

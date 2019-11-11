@@ -23,8 +23,12 @@ class PostUpload extends Component {
         this.setState({error: "Please select a file"})
         return;
     }
-    if (this.state.content == "") {
+    if (!this.props.op && this.state.content == "") {
         this.setState({error: "Your post needs content"})
+        return;
+    }
+    if (this.props.op && this.state.file == null && this.state.content == ""){
+        this.setState({error: "Your post needs a file or content"})
         return;
     }
     const formData = new FormData();
