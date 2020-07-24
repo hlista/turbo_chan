@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { renderToString } from 'react-dom/server'
+import {Manager, Reference, Popper} from 'react-popper'
 import Tagbox from "./Tagbox"
 import Tags from "./Tags"
 import $ from 'jquery'
