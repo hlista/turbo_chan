@@ -1,11 +1,11 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.11.2"
 
-set :application, 'turbo_chan' #change this to the name of your app
-set :repo_url, 'git@github.com:hlista/turbo_chan.git' #change this to the url of your app on github
+set :application, 'turbo_chan'
+set :repo_url, 'git@github.com:hlista/turbo_chan.git'
 set :deploy_to, '/var/www/turbo_chan'
 set :use_sudo, true
-set :branch, 'master' #or whichever branch you want to use
+set :branch, 'master'
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default branch is :master
