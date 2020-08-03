@@ -38,8 +38,10 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'capistrano', '~> 3.11.2'
+  gem 'capistrano-passenger'
   gem 'capistrano-rails'
   gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
 end
 
 group :test do
