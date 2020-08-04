@@ -1,5 +1,4 @@
 Rails.application.configure do
-    Rails.env = "production rails db:create"
   # Settings specified here will take precedence over those in config/application.rb.
   config.require_master_key = true
   # Code is not reloaded between requests.
