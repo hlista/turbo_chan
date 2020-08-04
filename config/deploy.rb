@@ -7,7 +7,7 @@ set :deploy_to, '/var/www/turbo_chan'
 set :use_sudo, true
 set :branch, 'master'
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
-
+set :linked_files, %w{config/master.key}
 set :rvm_ruby_version, '2.6.5'
 set :passenger_restart_with_touch, true
 
