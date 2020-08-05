@@ -2,6 +2,7 @@
   "name": "turbo_chan",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.11.1",
     "@babel/preset-react": "^7.6.3",
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
