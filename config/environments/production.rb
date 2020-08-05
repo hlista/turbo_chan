@@ -13,8 +13,8 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_cache_store, {url: "redis://localhost:6379/1"} #Using redis on the deploy machine
-  Resque.redis = "redis://localhost:6379"
+  config.cache_store = :redis_cache_store, {url: "redis://turbochanredis.wq6bnx.0001.use2.cache.amazonaws.com:6379/1"} #Using redis on the deploy machine
+  Resque.redis = "turbochanredis.wq6bnx.0001.use2.cache.amazonaws.com:6379"
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
