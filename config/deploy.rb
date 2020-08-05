@@ -11,6 +11,16 @@ set :linked_files, %w{config/master.key}
 set :rvm_ruby_version, '2.6.5'
 set :passenger_restart_with_touch, true
 
+namespace :deploy do
+  desc "reload the database with seed data"
+  task :seed do
+    on roles(:all) do
+      within current_path do
+        execute :bundle, :exec, 'rails', 'db:seed', 'RAILS_ENV=production'
+      end
+    end
+  end
+end
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
