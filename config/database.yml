@@ -83,5 +83,3 @@ test:
 production:
   <<: *default
   url: <%= Rails.application.credentials.dig(:database_url) %>
-  username: postgres
-  password: <%= Rails.application.credentials.dig(:database_password) %>
