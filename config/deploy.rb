@@ -21,6 +21,17 @@ namespace :deploy do
     end
   end
 end
+
+namespace :deploy do
+  desc "Start Resque"
+  task :work do
+    on roles(:all) do
+      within current_path do
+        execute 'PIDFILE=./resque.pid BACKGROUND=yes QUEUE=tag bundle exec rake resque:work'
+      end
+    end
+  end
+end
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 

@@ -278,14 +278,18 @@ DEPENDENCIES
   capybara (>= 2.15)
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
+  multi_json
   pg (>= 0.18, < 2.0)
   puma
+  rack
   rails (~> 6.0.0)
   redis (~> 4.0)
+  redis-namespace
   resque
   resque_solo
   sass-rails (~> 5)
   selenium-webdriver
+  sinatra
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
