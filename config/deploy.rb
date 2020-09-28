@@ -27,7 +27,7 @@ namespace :deploy do
   task :work do
     on roles(:all) do
       within current_path do
-        execute 'PIDFILE=./resque.pid BACKGROUND=yes QUEUE=tag bundle exec rake resque:work'
+        execute 'PIDFILE=./resque.pid BACKGROUND=yes QUEUE=tag rake resque:work'
       end
     end
   end
