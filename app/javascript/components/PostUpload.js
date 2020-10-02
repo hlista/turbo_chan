@@ -96,9 +96,6 @@ class PostUpload extends Component {
     this.reader.readAsDataURL(event.target.files[0])
   }
   render () {
-    const cardPaddingStyle = {
-        padding: '0.25rem 1.25rem'
-    }
     return (
         <div className="post-container" onClick={this.handleCardClick}>
               <form onSubmit={this.handleSubmit}>
