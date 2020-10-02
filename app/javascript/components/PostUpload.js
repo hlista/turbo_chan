@@ -111,7 +111,7 @@ class PostUpload extends Component {
                             <div className="card-body d-flex">
                                 {this.state.file ? <img onClick={this.handleImageClick} src={this.reader.result} style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/> :<img onClick={this.handleImageClick} src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/>}
                                 <input type="file" ref={this.hiddenFileInput} onChange={this.handleFileChange} style={{display:'none'}} />
-                                <div ref={this.textRef} style={{paddingLeft: '10px'}}>
+                                <div className="flex-fill" ref={this.textRef} style={{paddingLeft: '10px'}}>
                                     {this.state.isWrite ? <textarea autoFocus value={this.state.content} className="form-control" onChange={this.handleTextChange} /> : 
                                     <blockquote onClick={this.handleQuoteClick}> {this.state.content ? this.state.content : "Click here to write a message"}</blockquote> }
                                 </div>
