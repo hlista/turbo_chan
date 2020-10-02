@@ -101,9 +101,13 @@ class PostUpload extends Component {
               <form onSubmit={this.handleSubmit}>
                     <div className="d-flex">
                         <div className="card" style={{minWidth: '600px'}}>
+                            {this.props.op ?
+                            <div className="card-header">
+                                Reply to Thread No. {this.props.op}
+                            </div> : 
                             <div className="card-header">
                                 Create a New Thread on /{this.props.board}/
-                            </div>
+                            </div>}
                             <div className="card-body d-flex">
                                 {this.state.file ? <img onClick={this.handleImageClick} src={this.reader.result} style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/> :<img onClick={this.handleImageClick} src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/>}
                                 <input type="file" ref={this.hiddenFileInput} onChange={this.handleFileChange} style={{display:'none'}} />

@@ -13,7 +13,7 @@ class Header extends Component {
         return (
             <React.Fragment>
                 {this.props.isOp && this.props.isBoardView ?
-                    <Link to={"/"+this.props.abrv+"/thread/"+this.props.pid} className="float-right">Reply</Link> : null}
+                    <Link to={"/"+this.props.abrv+"/thread/"+this.props.pid} className="float-right">Go To Thread</Link> : null}
                 <a>{'No. '+this.props.pid}</a>
                 {replies}
             </React.Fragment>
