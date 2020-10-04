@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactOnRails from "react-on-rails"
+import Draggable from 'react-draggable'
 class PostUpload extends Component {
   constructor () {
     super();
@@ -97,34 +98,38 @@ class PostUpload extends Component {
   }
   render () {
     return (
-        <div className="post-container" onClick={this.handleCardClick}>
-              <form onSubmit={this.handleSubmit}>
-                    <div className="d-flex">
-                        <div className="card">
-                            {this.props.op ?
-                            <div className="card-header">
-                                Reply to Thread No. {this.props.op}
-                            </div> : 
-                            <div className="card-header">
-                                Create a New Thread on /{this.props.board}/
-                            </div>}
-                            <div className="card-body d-flex">
-                                {this.state.file ? <img onClick={this.handleImageClick} src={this.reader.result} style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/> :<img onClick={this.handleImageClick} src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/>}
-                                <input type="file" ref={this.hiddenFileInput} onChange={this.handleFileChange} style={{display:'none'}} />
-                                <div className="flex-fill" ref={this.textRef} style={{paddingLeft: '10px'}}>
-                                    {this.state.isWrite ? <textarea autoFocus value={this.state.content} className="form-control" onChange={this.handleTextChange} /> : 
-                                    <blockquote onClick={this.handleQuoteClick}> {this.state.content ? this.state.content : "Click here to write a message"}</blockquote> }
-                                </div>
+        <Draggable handle="strong">
+            <div className="post-container" onClick={this.handleCardClick}>
+                  <form onSubmit={this.handleSubmit}>
+                        <div className="d-flex">
+                            <div className="card">
+                            <strong className="cursor">
+                                {this.props.op ?
+                                <div className="card-header">
+                                    Reply to Thread No. {this.props.op}
+                                </div> : 
+                                <div className="card-header">
+                                    Create a New Thread on /{this.props.board}/
+                                </div>}
+                            </strong>
+                                <div className="card-body d-flex">
+                                    {this.state.file ? <img onClick={this.handleImageClick} src={this.reader.result} style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/> :<img onClick={this.handleImageClick} src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" style={{maxWidth: '100px', maxHeight: '100px', height: 'auto', width: 'auto'}}/>}
+                                    <input type="file" ref={this.hiddenFileInput} onChange={this.handleFileChange} style={{display:'none'}} />
+                                    <div className="flex-fill" ref={this.textRef} style={{paddingLeft: '10px'}}>
+                                        {this.state.isWrite ? <textarea autoFocus value={this.state.content} className="form-control" onChange={this.handleTextChange} /> : 
+                                        <blockquote onClick={this.handleQuoteClick}> {this.state.content ? this.state.content : "Click here to write a message"}</blockquote> }
+                                    </div>
 
-                            </div>
-                            <div className="card-footer">
-                                <font color="red">{this.state.error}</font>
-                                <button type='submit' className='float-right'>Send</button>
+                                </div>
+                                <div className="card-footer">
+                                    <font color="red">{this.state.error}</font>
+                                    <button type='submit' className='float-right'>Send</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-        </div>
+                    </form>
+            </div>
+        </Draggable>
 
     );
   }
